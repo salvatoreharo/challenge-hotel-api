@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Room;
 use App\Repository\RoomRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class RoomsTypes
+class RoomsTypes extends AbstractController
 {
     private $roomRepository;
 
@@ -14,8 +15,8 @@ class RoomsTypes
         $this->roomRepository = $roomRepository;
     }
 
-    public function __invoke(): iterable
+    public function __invoke(int $hotelId): iterable
     {
-       return $this->roomRepository->getAvailableTypes();
+       return $this->roomRepository->getAvailableTypes($hotelId);
     }
 }

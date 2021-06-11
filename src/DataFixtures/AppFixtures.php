@@ -11,6 +11,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    const MAX_HOTELS = 3;
+    const MAX_HOTEL_ROOMS = 5;
+
     public function load(ObjectManager $manager)
     {
         $rooms = $this->createHotels($manager);
@@ -20,11 +23,11 @@ class AppFixtures extends Fixture
 
     public function createHotels(ObjectManager $manager) {
         $rooms = [];
-        for ($i = 1; $i <= 2; $i++) {
+        for ($i = 1; $i <= self::MAX_HOTELS; $i++) {
             $hotel = new Hotel();
             $hotel->setName('Hotel ' . $i);
             $manager->persist($hotel);
-            for ($x = 1; $x <= 2; $x++) {
+            for ($x = 1; $x <= self::MAX_HOTEL_ROOMS; $x++) {
                 $room = new Room();
                 $room->setType(Room::TYPES[array_rand(Room::TYPES)]);
                 $room->setHotel($hotel);

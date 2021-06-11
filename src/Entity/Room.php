@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  *  collectionOperations={
  *      "get_by_type"={
  *          "method"="GET",
- *          "path"="/rooms/types",
+ *          "path"="/rooms/types/{hotelId}",
  *          "controller"=RoomsTypes::class
  *      }
  *  })

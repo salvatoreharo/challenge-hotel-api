@@ -19,7 +19,7 @@ class RoomRepository extends ServiceEntityRepository
         parent::__construct($registry, Room::class);
     }
 
-    public function getAvailableTypes()
+    public function getAvailableTypes($hotelId)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
@@ -27,9 +27,10 @@ class RoomRepository extends ServiceEntityRepository
             FROM App\Entity\Room room
             JOIN room.hotel hotel
             LEFT JOIN room.reservations reservation WITH reservation.isActive = 1
-            WHERE reservation is NULL 
+            WHERE hotel.id = ?1 AND reservation is NULL
             GROUP BY room.type
         ");
+        $query->setParameter(1, $hotelId);
         return $query->getResult();
     }
 
