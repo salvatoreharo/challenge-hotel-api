@@ -23,7 +23,7 @@ class RoomRepository extends ServiceEntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-            SELECT hotel.id hotelId, hotel.name hotelName, room.id roomId, room.type roomType
+            SELECT hotel.id hotelId, hotel.name hotelName, room.id roomId, room.type roomType, COUNT(room.type) total
             FROM App\Entity\Room room
             JOIN room.hotel hotel
             LEFT JOIN room.reservations reservation WITH reservation.isActive = 1
@@ -32,6 +32,21 @@ class RoomRepository extends ServiceEntityRepository
         ");
         $query->setParameter(1, $hotelId);
         return $query->getResult();
+    }
+
+    public function getAvailableRoom($hotelId, $roomType)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+            SELECT room
+            FROM App\Entity\Room room
+            LEFT JOIN room.reservations reservation WITH reservation.isActive = 1
+            WHERE room.hotel = ?1 AND reservation is NULL AND room.type = ?2
+        ");
+        $query->setParameter(1, $hotelId);
+        $query->setParameter(2, $roomType);
+        $query->setMaxResults(1);
+        return $query->getOneOrNullResult();
     }
 
 }

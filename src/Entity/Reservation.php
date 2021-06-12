@@ -4,10 +4,26 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ReservationRepository;
+use App\Controller\ReservationsPostUser;
+use App\Controller\ReservationsGetEmail;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *  collectionOperations={
+ *      "get_by_email"={
+ *          "method"="GET",
+ *          "path"="/reservations/email/{email}",
+ *          "controller"=ReservationsGetEmail::class,
+ *          "defaults"={"_api_receive"=false}
+ *      },
+ *      "post_user"={
+ *          "method"="POST",
+ *          "path"="/reservations/user",
+ *          "controller"=ReservationsPostUser::class,
+ *          "defaults"={"_api_receive"=false}
+ *      }
+ *  })
  * @ORM\Entity(repositoryClass=ReservationRepository::class)
  */
 class Reservation

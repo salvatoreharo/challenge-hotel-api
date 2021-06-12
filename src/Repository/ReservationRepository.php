@@ -19,4 +19,19 @@ class ReservationRepository extends ServiceEntityRepository
         parent::__construct($registry, Reservation::class);
     }
 
+    public function getByEmail(string $email)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("
+            SELECT hotel.name hotelName, room.type roomType, reservation.createdAt
+            FROM App\Entity\Reservation reservation
+            JOIN reservation.userGuest user
+            JOIN reservation.room room
+            JOIN room.hotel hotel
+            WHERE user.email = ?1
+        ");
+        $query->setParameter(1, $email);
+        return $query->getResult();
+    }
+
 }

@@ -12,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     const MAX_HOTELS = 3;
-    const MAX_HOTEL_ROOMS = 5;
+    const MAX_HOTEL_ROOMS = 20;
 
     public function load(ObjectManager $manager)
     {
