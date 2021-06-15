@@ -7,7 +7,7 @@ symfony     (https://symfony.com/download)
 # Intrucciones de instalacion
 1. composer install
 2. clonar archivo .env.dist y nombrarlo .env
-3. pbc doctrine:schema:create
+3. php bin/console doctrine:schema:create
 4. php bin/console make:migration
 5. php bin/console doctrine:migrations:migrate
 6. php bin/console doctrine:fixtures:load
